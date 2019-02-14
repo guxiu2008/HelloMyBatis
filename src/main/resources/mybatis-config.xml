@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--配置-->
+<configuration>
+    <!--属性-->
+    <properties resource="jdbc.properties"></properties>
+    <!--设置-->
+    <!--<settings>-->
+    <!--<setting name="" value=""/>-->
+    <!--</settings>-->
+    <!--类型命名-->
+    <!--<typeAliases></typeAliases>-->
+    <!--类型处理器-->
+    <!--<typeHandlers></typeHandlers>-->
+    <!--对象工厂-->
+    <!--<objectFactory type=""/>-->
+    <!--插件-->
+    <!--<plugins>-->
+    <!--<plugin interceptor=""></plugin>-->
+    <!--</plugins>-->
+    <!--1.配置环境,使用环境default的配置
+     Mybatis-config.xml里面,environments中可以有多个environment,每个environment都有自己的id,
+     而environments的default属性用于选择用哪一个environment.
+     用处是可以通过简单的配置切换开发、测试、UAT以及生产环境。-->
+    <environments default="default">
+        <!--配置id为default的数据库信息-->
+        <environment id="default">
+            <!--使用JDBC的事务管理-->
+            <transactionManager type="JDBC"/>
+            <!--数据源-->
+            <dataSource type="pooled">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--数据库厂商标识-->
+    <!--<databaseIdProvider type=""/>-->
+    <!--映射器-->
+    <mappers>
+        <mapper resource="Mapper/CustomerMapper.xml"></mapper>
+    </mappers>
+</configuration>

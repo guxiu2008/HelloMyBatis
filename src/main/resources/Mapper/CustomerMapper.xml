@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace表示命名空间 -->
+<mapper namespace="com.mybatis.po.CustomerMapper">
+    <!-- 根据客户编号获取客户信息 -->
+    <select id="findCustomerById" parameterType="Integer" resultType="com.mybatis.po.Customer">
+        select * from t_customer where id = #{id}
+    </select>
+
+    <!-- 根据客户客户名模糊获取客户信息 -->
+    <!-- 如果Mapper.xml中的SQL配置，参数类型parameterType为String类型，则变量名必须为value或者_parameter，
+    否则会报异常“Cause: org.apache.ibatis.reflection.ReflectionException: There is no getter for property named 'username' in 'class java.lang.String'” -->
+    <select id="findCustomerByName1" parameterType="String" resultType="com.mybatis.po.Customer">
+        select * from t_customer where username like '%${value}%'
+    </select>
+
+    <!-- 根据客户客户名模糊获取客户信息 -->
+    <!-- 3、	Mapper.xml中的SQL配置，如果是模糊查询（即使用like），参数不能只用’%#{value}%’，会报错。
+    网上很多方法，
+    例如’%${value}%’这种非预编译的方式，但是这样不能解决SQL注入的问题；
+    又例如CONCAT('%',#{name},'%')、'%'+#{name}+'%'或者'%'||#{name}||'%'，这种又会存在不同数据库存在不同语法的问题。
+    比较好的方式是使用bind标签。
+    Bind标签同样需要使用value或者_parameter去支撑String类型的参数，SQL语句引用Bind标签的时候不能使用单引号-->
+    <select id="findCustomerByName2" parameterType="String" resultType="com.mybatis.po.Customer">
+        <bind name="usernameLike" value="'%'+ _parameter + '%'" />
+        select * from t_customer where username like #{usernameLike}
+    </select>
+
+    <insert id="insertCustomer" parameterType="com.mybatis.po.Customer">
+        insert into t_customer
+        (id, username, jobs, phone)
+        values
+        (#{id}, #{username}, #{jobs}, #{phone})
+    </insert>
+
+    <update id="updateCustomer" parameterType="com.mybatis.po.Customer">
+        update t_customer set
+        jobs=#{jobs},phone=#{phone}
+        where id=#{id}
+    </update>
+
+    <update id="deleteCustomer" parameterType="Integer">
+        delete from t_customer
+        where id=#{id}
+    </update>
+</mapper>
