@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import com.mybatis.po.Customer;
+import com.mybatis.util.SqlSessionBuilder;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -26,7 +27,7 @@ public class MybatisSelectOneTest {
 
         PropertyConfigurator.configure(Resources.getResourceAsStream("log4j.properties"));
 
-        // 1.读取配置文件
+/*        // 1.读取配置文件
         String resource = "mybatis-config.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
 
@@ -34,7 +35,10 @@ public class MybatisSelectOneTest {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 
         // 3.通过SqlSessionFactory创建SqlSession
-        SqlSession sqlSession = sqlSessionFactory.openSession();
+        SqlSession sqlSession = sqlSessionFactory.openSession();*/
+
+        // SqlSession的生成替换成单例获取
+        SqlSession sqlSession = SqlSessionBuilder.getSeesion();
 
         // 4.SqlSession执行映射文件中定义的SQL, 并返回结果
         Customer customer = sqlSession.selectOne("com.mybatis.po.CustomerMapper.findCustomerById", 1);

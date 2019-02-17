@@ -7,9 +7,10 @@
     <!--属性-->
     <properties resource="jdbc.properties"></properties>
     <!--设置-->
-    <!--<settings>-->
-    <!--<setting name="" value=""/>-->
-    <!--</settings>-->
+    <settings>
+        <!-- 不建议使用一级缓存 -->
+        <setting name="localCacheScope" value="STATEMENT"/>
+    </settings>
     <!--类型命名-->
     <!--<typeAliases></typeAliases>-->
     <!--类型处理器-->
