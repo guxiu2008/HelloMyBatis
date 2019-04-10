@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Package: com.mybatis.test
- * DESCRIPTION:
+ * DESCRIPTION: 测试实体内带有list属性
  *
  * @author guxiu2008
  * @create 2019-04-10 22:16
