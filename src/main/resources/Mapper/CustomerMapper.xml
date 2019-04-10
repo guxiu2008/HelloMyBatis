@@ -22,7 +22,7 @@
     比较好的方式是使用bind标签。
     Bind标签同样需要使用value或者_parameter去支撑String类型的参数，SQL语句引用Bind标签的时候不能使用单引号-->
     <select id="findCustomerByName2" parameterType="String" resultType="com.mybatis.po.Customer">
-        <bind name="usernameLike" value="'%'+ _parameter + '%'" />
+        <bind name="usernameLike" value="'%'+ _parameter + '%'"/>
         select * from t_customer where username like #{usernameLike}
     </select>
 
@@ -45,20 +45,26 @@
     </update>
 
 
-    <select id="findCustomerMapByName1"
+    <select id="findCustomerListByName1"
             parameterType="String"
             resultMap="customerMap">
-        select * from t_customer where username like '%${value}%'
+        select a.id as aid, a.username as username, a.jobs as jobs, a.phone as phone,
+        b.id as bid, b.brand as brand, b.user_id as userId
+        from t_customer a left join t_car b on a.id = b.user_id
+        where username like '%${value}%'
     </select>
 
     <resultMap id="customerMap" type="com.mybatis.po.Customer">
-        <id column="id" property="id" />
-        <result column="username" property="username" />
-        <result column="jobs" property="jobs" />
-        <result column="phone" property="phone" />
+        <result column="aid" property="id"/>
+        <result column="username" property="username"/>
+        <result column="jobs" property="jobs"/>
+        <result column="phone" property="phone"/>
+        <collection property="cars" ofType="com.mybatis.po.Car">
+            <result column="bid" property="id"/>
+            <result column="brand" property="brand"/>
+            <result column="userId" property="userId"/>
+        </collection>
     </resultMap>
-
-
 
 
 </mapper>

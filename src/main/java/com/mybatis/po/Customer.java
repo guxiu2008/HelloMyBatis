@@ -1,5 +1,7 @@
 package com.mybatis.po;
 
+import java.util.List;
+
 /**
  * Package: com.mybatis.po
  * DESCRIPTION:对应数据库中的t_customer表
@@ -12,6 +14,7 @@ public class Customer {
     private String username;
     private String jobs;
     private String phone;
+    private List<Car> cars;
 
     public Integer getId() {
         return id;
@@ -45,6 +48,14 @@ public class Customer {
         this.phone = phone;
     }
 
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -52,6 +63,7 @@ public class Customer {
                 ", username='" + username + '\'' +
                 ", jobs='" + jobs + '\'' +
                 ", phone='" + phone + '\'' +
+                ", cars=" + cars +
                 '}';
     }
 }
